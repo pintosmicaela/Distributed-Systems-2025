@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: consorcio
+    volumes:
+      - mysql_volume:/var/lib/mysql
+      - /init-base/init.sql:/docker-entrypoint-initdb.d/init.sql:Z
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  mysql_volume:
+

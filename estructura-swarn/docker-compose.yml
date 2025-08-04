@@ -1,0 +1,102 @@
+version: "3.8"
+
+configs:
+  init-sql:
+    file: ./base-de-datos/init.sql
+
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: consorcio
+    configs:
+      - source: init-sql
+        target: /docker-entrypoint-initdb.d/init.sql
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  agente:
+    image: agente:latest
+    ports:
+      - target: 50052
+        published: 50052
+        protocol: tcp
+        mode: ingress
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  lastnews:
+    image: lastnews:latest
+    ports:
+      - target: 50053
+        published: 50053
+        protocol: tcp
+        mode: ingress
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  adminAreas:
+    image: adminareas:latest
+    ports:
+      - target: 50054
+        published: 50054
+        protocol: tcp
+        mode: ingress
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+  tareas:
+    image: tareas:latest
+    depends_on:
+      - mysql
+    ports:
+      - target: 50055
+        published: 50055
+        protocol: tcp
+        mode: ingress
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+
+  enviarnoticia:
+    image: enviarnoticia:latest
+    depends_on:
+      - mysql
+    ports:
+      - target: 50056
+        published: 50056
+        protocol: tcp
+        mode: ingress
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+
+  suscribecat:
+    image: suscribecat:latest
+    depends_on:
+      - mysql
+    ports:
+      - target: 50057
+        published: 50057
+        protocol: tcp
+        mode: ingress
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+volumes:
+  mysql_volume:
+

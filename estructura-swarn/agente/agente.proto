@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package agente;
+
+// Mensaje de solicitud
+message noticiasRequest {
+  int32 nombre_usuario = 1;
+  string password = 2;
+}
+
+// Mensaje de respuesta
+message noticiasInfo {
+  string mensaje = 1;
+}
+
+message LoginDatos {
+  int32 dni = 1;
+  string password = 2;
+}
+
+message ResultadoLogin{
+   bool resultado = 1;
+}
+
+message DatosSuscribirNuevaCategoria{
+  int32 cliente_id = 1;
+  string area = 2;
+  string password = 3;
+}
+
+message ResultadoSuscribirNuevaCategoria{
+  string mensaje = 1 ;
+  bool exito =2 ;
+}
+
+message DatosObtenerUltimasNoticias{
+  int32 cliente_id = 1;
+  string password = 2;
+  string area = 3;
+}
+
+message DatosAgregarCategoria{
+  int32 cliente_id = 1;
+  string password = 2;
+  string area = 3;
+}
+
+message ResultadoAgregarCategoria{
+  string respuesta = 1;
+}
+
+message DatosVerCategoriasInscripto{
+  int32 cliente_id = 1;
+  string password = 2;
+}
+
+message RespuestaCategoriaInscripto{
+  string respuesta = 1;
+}
+
+message DatosBorrarArea{
+  int32 cliente_id = 1;
+  string password = 2;
+  string area = 3;
+}
+
+message RespuestaBorrarArea{
+  string respuesta = 1;
+}
+
+message DatosEnviarNoticia{
+  int32 cliente_id = 1;
+  string password = 2;
+  string titulo = 3;
+  string contenido = 4;
+  string area = 5;
+}
+
+message RespuestaEnviarNoticia{
+  string respuesta = 1;
+}
+
+// Servicio
+service Servicio_Agente {
+  rpc ObtenerNoticiasUltimas24hs (noticiasRequest) returns (noticiasInfo);
+  rpc Login (LoginDatos) returns (ResultadoLogin);
+  rpc AgregarCategoria (DatosAgregarCategoria) returns (ResultadoAgregarCategoria);
+  rpc SuscribirNuevaCategoria (DatosSuscribirNuevaCategoria) returns (ResultadoSuscribirNuevaCategoria);
+  rpc BorrarArea (DatosBorrarArea) returns  (RespuestaBorrarArea);
+  rpc EnviarNoticia (DatosEnviarNoticia) returns (RespuestaEnviarNoticia);
+  rpc BorrarSuscripcionCategoria (DatosSuscribirNuevaCategoria) returns (ResultadoSuscribirNuevaCategoria);
+  rpc ObtenerUltimasNoticias (DatosObtenerUltimasNoticias) returns (noticiasInfo);
+  rpc VerCategoriasInscripto (DatosVerCategoriasInscripto) returns (RespuestaCategoriaInscripto);
+}
+
+

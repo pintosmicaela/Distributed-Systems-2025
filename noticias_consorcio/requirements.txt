@@ -1,5 +1,0 @@
-grpcio
-grpcio-tools
-protobuf
-mysql-connector-python
-cryptography

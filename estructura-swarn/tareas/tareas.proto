@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package tareas;
+
+service TareasService {
+	rpc Login (LoginRequest) returns (LoginResponse);
+	rpc GetNews (GetNewsRequest) returns (GetNewsResponse);
+	rpc DeleteNewNews (DeleteNewNewsRequest) returns (DeleteNewNewsResponse);
+}
+
+message LoginRequest {
+	int32 cliente = 1;
+	string password = 2;
+}
+
+message LoginResponse {
+	bool success = 1;
+	string mensaje_a_mostrar = 2;
+}
+
+message GetNewsRequest {
+	int32 cliente = 1;
+}
+
+message GetNewsResponse {
+	string titulo = 1;
+	string contenido = 2;
+	string hora = 3;
+}
+
+message DeleteNewNewsRequest{
+	int32 cliente = 1;
+}
+
+message DeleteNewNewsResponse{
+	bool success = 1;
+	string mensaje_a_mostrar = 2;
+}

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package suscripciones;
+
+service SuscripcionesNoticias {
+  rpc SubscribirCliente(ClienteArea) returns (Respuesta);
+  rpc BorrarSuscripcion(ClienteArea) returns (Respuesta);
+  rpc ObtenerNoticiasDeArea(ClienteArea) returns (ListaNoticias);
+}
+
+message ClienteArea {
+  int32 cliente_id = 1;
+  string area = 2;
+  string password = 3;  // cifrada con Fernet
+}
+
+message Respuesta {
+  string mensaje = 1;
+  bool exito = 2;
+}
+
+message Noticia {
+  string titulo = 1;
+  string contenido = 2;
+  string fecha = 3;
+}
+
+message ListaNoticias {
+  repeated Noticia noticias = 1;
+}
+
+
+

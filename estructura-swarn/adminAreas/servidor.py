@@ -4,6 +4,7 @@ from mysql.connector import (connection)
 from mysql.connector import errorcode
 from concurrent import futures
 from cryptography.fernet import Fernet
+import os
 import logging
 import areas_pb2
 import areas_pb2_grpc
@@ -18,7 +19,7 @@ signal.signal(signal.SIGINT, manejar_ctrl_c)
 
 logger = logging.getLogger(__name__)
 
-CLAVE = b'J8vKqAnGsyiQUKmM2hRsaM4TQEL8gtjCKxgMrzG2Fnw='
+CLAVE = os.environ["FERNET_KEY"].encode()
 
 class AdminAreasServicer(areas_pb2_grpc.AdminAreasServicer):
     def AddArea(self, request, context):

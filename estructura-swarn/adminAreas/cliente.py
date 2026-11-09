@@ -2,6 +2,7 @@ import grpc
 import areas_pb2
 import areas_pb2_grpc
 from cryptography.fernet import Fernet
+import os
 
 def ejecutar_cliente():
     # Crear un canal inseguro al servidor
@@ -10,7 +11,7 @@ def ejecutar_cliente():
         stub = areas_pb2_grpc.AdminAreasStub(channel)
 
         # Crear una petición
-        clave = b'J8vKqAnGsyiQUKmM2hRsaM4TQEL8gtjCKxgMrzG2Fnw='
+        clave = os.environ["FERNET_KEY"].encode()
         cifrador = Fernet(clave)
         while True:
             entrada = input("Ingresá su número de documento: ").strip()

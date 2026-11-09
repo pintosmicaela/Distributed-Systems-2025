@@ -6,9 +6,10 @@ import tareas_pb2_grpc
 import hashlib
 import time
 from cryptography.fernet import Fernet
+import os
 import hashlib
 
-clave = b'J8vKqAnGsyiQUKmM2hRsaM4TQEL8gtjCKxgMrzG2Fnw='
+clave = os.environ["FERNET_KEY"].encode()
 cifrador = Fernet(clave)
 
 

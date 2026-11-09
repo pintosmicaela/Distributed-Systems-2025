@@ -76,13 +76,18 @@ docker build -t tareas         ./tareas
 docker build -t enviarnoticia  ./enviar-noticia
 docker build -t suscribecat    ./suscribecat
 
-# 2. Inicializar Swarm (una sola vez) y desplegar el stack
+# 2. Generar una clave de cifrado (Fernet) y exportarla como variable de entorno
+export FERNET_KEY=$(python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())")
+
+# 3. Inicializar Swarm (una sola vez) y desplegar el stack
 docker swarm init
 docker stack deploy -c docker-compose.yml consorcio
 
-# 3. Verificar los servicios
+# 4. Verificar los servicios
 docker service ls
 ```
+
+La clave de cifrado no está en el repositorio: se lee de la variable de entorno `FERNET_KEY`, que deben compartir los servicios y el cliente (`adminAreas/cliente.py`).
 
 Para escalar un servicio (por ejemplo, el agente):
 

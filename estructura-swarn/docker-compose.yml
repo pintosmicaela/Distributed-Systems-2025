@@ -35,6 +35,8 @@ services:
         condition: on-failure
   lastnews:
     image: lastnews:latest
+    environment:
+      FERNET_KEY: ${FERNET_KEY}
     ports:
       - target: 50053
         published: 50053
@@ -46,6 +48,8 @@ services:
         condition: on-failure
   adminAreas:
     image: adminareas:latest
+    environment:
+      FERNET_KEY: ${FERNET_KEY}
     ports:
       - target: 50054
         published: 50054
@@ -57,6 +61,8 @@ services:
         condition: on-failure
   tareas:
     image: tareas:latest
+    environment:
+      FERNET_KEY: ${FERNET_KEY}
     depends_on:
       - mysql
     ports:
@@ -72,6 +78,8 @@ services:
 
   enviarnoticia:
     image: enviarnoticia:latest
+    environment:
+      FERNET_KEY: ${FERNET_KEY}
     depends_on:
       - mysql
     ports:
@@ -86,6 +94,8 @@ services:
 
   suscribecat:
     image: suscribecat:latest
+    environment:
+      FERNET_KEY: ${FERNET_KEY}
     depends_on:
       - mysql
     ports:

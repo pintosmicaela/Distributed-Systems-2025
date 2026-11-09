@@ -4,6 +4,7 @@ from mysql.connector import (connection)
 from mysql.connector import errorcode
 from concurrent import futures
 from cryptography.fernet import Fernet
+import os
 import logging
 import suscribecat_pb2
 import suscribecat_pb2_grpc
@@ -18,7 +19,7 @@ signal.signal(signal.SIGINT, manejar_ctrl_c)
 
 logger = logging.getLogger(__name__)
 
-CLAVE = b'J8vKqAnGsyiQUKmM2hRsaM4TQEL8gtjCKxgMrzG2Fnw='
+CLAVE = os.environ["FERNET_KEY"].encode()
 
 class SuscribeServicer(suscribecat_pb2_grpc.SuscribeServicer):
     def SuscribeCategoria(self, request, context):
